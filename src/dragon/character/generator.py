@@ -5,6 +5,7 @@ from ..core.style.IStyle import EstiloRolagem
 from ..core.style.adventory import EstiloAventureiro
 from ..core.style.classic import EstiloClassico
 from ..core.style.heroic import EstiloHeroico
+from ..core.attributes import Atributos
 
 
 class GeradorPersonagem:
