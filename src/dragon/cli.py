@@ -1,29 +1,50 @@
-"""
-Interface de linha de comando para o gerador de personagens
-"""
+from abc import ABC, abstractmethod
+from typer import Typer
+from .character.generator import GeradorPersonagem
 
-import sys
-from .generator import InteractiveCharacterCreator
+app = Typer()
 
 
+@app.command()
 def main():
-    """Função principal da CLI"""
-    try:
-        creator = InteractiveCharacterCreator()
-        character = creator.create_character_interactive()
+    """Função principal do programa"""
+    gerador = GeradorPersonagem()
 
-        print("\n" + "=" * 50)
-        print("PERSONAGEM CRIADO COM SUCESSO!")
-        print("=" * 50)
-        print(character.display_character_sheet())
+    while True:
+        try:
+            personagem = gerador.gerar_personagem()
 
-    except KeyboardInterrupt:
-        print("\n\nCriação de personagem cancelada.")
-        sys.exit(0)
-    except Exception as e:
-        print(f"\nErro durante a criação do personagem: {e}")
-        sys.exit(1)
+            print("\n" + "=" * 50)
+            print("PERSONAGEM GERADO COM SUCESSO!")
+            print("=" * 50)
+            print(personagem)
 
+            # Calcular e mostrar algumas estatísticas
+            atributos_dict = personagem.get_atributos_dict()
+            valores = list(atributos_dict.values())
 
-if __name__ == "__main__":
-    main()
+            print(f"Soma total dos atributos: {sum(valores)}")
+            print(f"Maior atributo: {max(valores)}")
+            print(f"Menor atributo: {min(valores)}")
+            print(f"Média dos atributos: {sum(valores)/6:.1f}")
+
+            # Perguntar se quer gerar outro personagem
+            while True:
+                continuar = (
+                    input("\nDeseja gerar outro personagem? (s/n): ").lower().strip()
+                )
+                if continuar in ["s", "sim", "y", "yes"]:
+                    print("\n" + "=" * 50 + "\n")
+                    break
+                elif continuar in ["n", "não", "nao", "no"]:
+                    print("\nObrigado por usar o Gerador de Personagem!")
+                    return
+                else:
+                    print("Resposta inválida! Digite 's' para sim ou 'n' para não.")
+
+        except KeyboardInterrupt:
+            print("\n\nPrograma interrompido pelo usuário. Até logo!")
+            return
+        except Exception as e:
+            print(f"\nErro inesperado: {e}")
+            print("Tente novamente.")
