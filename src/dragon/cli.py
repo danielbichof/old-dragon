@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from typer import Typer
+from InquirerPy import inquirer
 from .character.generator import GeradorPersonagem
 
 app = Typer()
@@ -28,19 +29,21 @@ def main():
             print(f"Menor atributo: {min(valores)}")
             print(f"Média dos atributos: {sum(valores)/6:.1f}")
 
-            # Perguntar se quer gerar outro personagem
-            while True:
-                continuar = (
-                    input("\nDeseja gerar outro personagem? (s/n): ").lower().strip()
-                )
-                if continuar in ["s", "sim", "y", "yes"]:
-                    print("\n" + "=" * 50 + "\n")
-                    break
-                elif continuar in ["n", "não", "nao", "no"]:
-                    print("\nObrigado por usar o Gerador de Personagem!")
-                    return
-                else:
-                    print("Resposta inválida! Digite 's' para sim ou 'n' para não.")
+            # Perguntar se quer gerar outro personagem (usando InquirerPy)
+            continuar = inquirer.select(
+                message="Deseja gerar outro personagem?",
+                choices=[
+                    {"name": "Sim", "value": "sim"},
+                    {"name": "Não", "value": "nao"},
+                ],
+                default="sim",
+            ).execute()
+            if continuar == "sim":
+                print("\n" + "=" * 50 + "\n")
+                continue
+            else:
+                print("\nObrigado por usar o Gerador de Personagem!")
+                return
 
         except KeyboardInterrupt:
             print("\n\nPrograma interrompido pelo usuário. Até logo!")
