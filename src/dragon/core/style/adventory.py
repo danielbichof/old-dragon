@@ -1,6 +1,6 @@
-from .IStyle import EstiloRolagem
-from ..attributes import Atributos
-from ..dice import Dado
+from dragon.core.style.IStyle import EstiloRolagem
+from dragon.core.attributes import Atributos
+from dragon.core.dice import Dado
 
 
 class EstiloAventureiro(EstiloRolagem):

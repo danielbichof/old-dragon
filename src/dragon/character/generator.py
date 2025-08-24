@@ -1,11 +1,11 @@
 # Interfaces
-from ..core.style.IStyle import EstiloRolagem
+from dragon.core.style.IStyle import EstiloRolagem
 
 # ---
-from ..core.style.adventory import EstiloAventureiro
-from ..core.style.classic import EstiloClassico
-from ..core.style.heroic import EstiloHeroico
-from ..core.attributes import Atributos
+from dragon.core.style.adventory import EstiloAventureiro
+from dragon.core.style.classic import EstiloClassico
+from dragon.core.style.heroic import EstiloHeroico
+from dragon.core.attributes import Atributos
 
 
 

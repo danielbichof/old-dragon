@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from ..attributes import Atributos
+from dragon.core.attributes import Atributos
+
 
 class EstiloRolagem(ABC):
     """Classe abstrata para diferentes estilos de rolagem"""
