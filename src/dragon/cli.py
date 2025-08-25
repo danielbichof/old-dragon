@@ -1,53 +1,59 @@
-from abc import ABC, abstractmethod
-from typer import Typer
+
+
+import typer
 from InquirerPy import inquirer
 from .character.generator import GeradorPersonagem
 
-app = Typer()
-
+app = typer.Typer()
 
 @app.command()
-def main():
-    """Função principal do programa"""
-    gerador = GeradorPersonagem()
+def gerar():
+	"""Gera um personagem interativamente pelo CLI."""
+	gerador = GeradorPersonagem()
+	estilos = gerador.get_estilos()
+	choices = [
+		{"name": f"{num}. {estilo.get_nome_estilo()} - {estilo.get_descricao()}", "value": num}
+		for num, estilo in estilos.items()
+	]
+	escolha = inquirer.select(
+		message="Escolha o estilo de rolagem:",
+		choices=choices,
+		default=1,
+	).execute()
+	estilo = estilos[escolha]
+	# Geração dos valores
+	if hasattr(estilo, 'gerar_valores'):
+		valores = estilo.gerar_valores()
+	else:
+		valores = None
+	# Se for estilo clássico, não precisa distribuir
+	if estilo.__class__.__name__ == 'EstiloClassico':
+		atributos = estilo.gerar_atributos(valores=valores)
+	else:
+		nomes_atributos = [
+			"Força", "Destreza", "Constituição", "Inteligência", "Sabedoria", "Carisma"
+		]
+		print(f"Valores rolados: {valores}")
+		distribuicao = []
+		valores_disponiveis = valores.copy()
+		for nome in nomes_atributos:
+			escolha_valor = inquirer.select(
+				message=f"Escolha o valor para {nome}:",
+				choices=[str(v) for v in valores_disponiveis],
+			).execute()
+			valor_escolhido = int(escolha_valor)
+			distribuicao.append(valor_escolhido)
+			valores_disponiveis.remove(valor_escolhido)
+		atributos = estilo.gerar_atributos(distribuicao=distribuicao, valores=valores)
+	print("\n" + "=" * 50)
+	print("PERSONAGEM GERADO COM SUCESSO!")
+	print("=" * 50)
+	print(atributos)
+	d = atributos.get_atributos_dict()
+	print(f"Soma total dos atributos: {sum(d.values())}")
+	print(f"Maior atributo: {max(d.values())}")
+	print(f"Menor atributo: {min(d.values())}")
+	print(f"Média dos atributos: {sum(d.values())/6:.1f}")
 
-    while True:
-        try:
-            personagem = gerador.gerar_personagem()
-
-            print("\n" + "=" * 50)
-            print("PERSONAGEM GERADO COM SUCESSO!")
-            print("=" * 50)
-            print(personagem)
-
-            # Calcular e mostrar algumas estatísticas
-            atributos_dict = personagem.get_atributos_dict()
-            valores = list(atributos_dict.values())
-
-            print(f"Soma total dos atributos: {sum(valores)}")
-            print(f"Maior atributo: {max(valores)}")
-            print(f"Menor atributo: {min(valores)}")
-            print(f"Média dos atributos: {sum(valores)/6:.1f}")
-
-            # Perguntar se quer gerar outro personagem (usando InquirerPy)
-            continuar = inquirer.select(
-                message="Deseja gerar outro personagem?",
-                choices=[
-                    {"name": "Sim", "value": "sim"},
-                    {"name": "Não", "value": "nao"},
-                ],
-                default="sim",
-            ).execute()
-            if continuar == "sim":
-                print("\n" + "=" * 50 + "\n")
-                continue
-            else:
-                print("\nObrigado por usar o Gerador de Personagem!")
-                return
-
-        except KeyboardInterrupt:
-            print("\n\nPrograma interrompido pelo usuário. Até logo!")
-            return
-        except Exception as e:
-            print(f"\nErro inesperado: {e}")
-            print("Tente novamente.")
+if __name__ == "__main__":
+	app()

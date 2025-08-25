@@ -3,38 +3,27 @@ from dragon.core.attributes import Atributos
 from dragon.core.dice import Dado
 
 
+
 class EstiloAventureiro(EstiloRolagem):
     """Estilo Aventureiro: Role 3d6 seis vezes e distribua como desejar"""
 
-    def gerar_atributos(self) -> Atributos:
-        """Gera atributos no estilo aventureiro (usando InquirerPy)"""
-        from InquirerPy import inquirer
-        valores = [Dado.rolar_3d6() for _ in range(6)]
+    def gerar_valores(self) -> list:
+        """Gera os 6 valores de atributos para o estilo aventureiro."""
+        return [Dado.rolar_3d6() for _ in range(6)]
+
+    def gerar_atributos(self, distribuicao: list = None, valores: list = None) -> Atributos:
+        """
+        Gera atributos no estilo aventureiro.
+        Se distribuicao for fornecida, usa a ordem dos valores nela;
+        caso contrário, usa a ordem dos valores gerados.
+        Se valores for fornecido, usa esses valores; senão, rola os dados.
+        """
+        if valores is None:
+            valores = self.gerar_valores()
+        if distribuicao is None:
+            distribuicao = valores.copy()
         atributos = Atributos()
-
-        print(f"Valores rolados: {valores}")
-        print("Distribua os valores nos atributos:")
-        nomes_atributos = [
-            "Força",
-            "Destreza",
-            "Constituição",
-            "Inteligência",
-            "Sabedoria",
-            "Carisma",
-        ]
-        atributos_ordenados = []
-        valores_disponiveis = valores.copy()
-
-        for nome_atributo in nomes_atributos:
-            escolha = inquirer.select(
-                message=f"Escolha o valor para {nome_atributo}:",
-                choices=[str(v) for v in valores_disponiveis],
-            ).execute()
-            valor_escolhido = int(escolha)
-            atributos_ordenados.append(valor_escolhido)
-            valores_disponiveis.remove(valor_escolhido)
-
-        atributos.definir_atributos_em_ordem(atributos_ordenados)
+        atributos.definir_atributos_em_ordem(distribuicao)
         return atributos
 
     def get_nome_estilo(self) -> str:

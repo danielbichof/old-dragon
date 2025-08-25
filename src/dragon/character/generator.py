@@ -11,44 +11,31 @@ from dragon.core.attributes import Atributos
 
 from InquirerPy import inquirer
 
+
 class GeradorPersonagem:
-    """Classe principal para geração de personagens"""
+    """Classe principal para geração de personagens (sem interação CLI)"""
 
     def __init__(self):
         self.estilos = {1: EstiloClassico(), 2: EstiloAventureiro(), 3: EstiloHeroico()}
 
-    def mostrar_estilos(self) -> None:
-        """Mostra os estilos disponíveis"""
-        print("=== ESTILOS DE ROLAGEM DISPONÍVEIS ===\n")
-        for numero, estilo in self.estilos.items():
-            print(f"{numero}. {estilo.get_nome_estilo()}")
-            print(f"   {estilo.get_descricao()}\n")
+    def get_estilos(self):
+        """Retorna um dicionário dos estilos disponíveis."""
+        return self.estilos
 
-    def escolher_estilo(self) -> EstiloRolagem:
-        """Permite ao usuário escolher um estilo de rolagem (usando InquirerPy)"""
-        choices = [
-            {"name": f"{numero}. {estilo.get_nome_estilo()} - {estilo.get_descricao()}", "value": numero}
-            for numero, estilo in self.estilos.items()
-        ]
-        escolha = inquirer.select(
-            message="Escolha o estilo de rolagem:",
-            choices=choices,
-            default=1,
-        ).execute()
-        return self.estilos[escolha]
+    def get_estilo(self, numero: int) -> EstiloRolagem:
+        """Retorna o estilo de rolagem pelo número."""
+        return self.estilos[numero]
 
-    def gerar_personagem(self) -> Atributos:
-        """Gera um personagem completo"""
-        print("=== GERADOR DE PERSONAGEM RPG OLD SCHOOL ===\n")
-
-        estilo_escolhido = self.escolher_estilo()
-
-        print(
-            f"\n=== GERANDO PERSONAGEM - {estilo_escolhido.get_nome_estilo().upper()} ==="
-        )
-        print(estilo_escolhido.get_descricao())
-        print()
-
-        atributos = estilo_escolhido.gerar_atributos()
-
-        return atributos
+    def gerar_personagem(self, estilo_num: int, distribuicao: list = None, valores: list = None) -> Atributos:
+        """
+        Gera um personagem completo a partir do número do estilo e parâmetros opcionais.
+        """
+        estilo = self.get_estilo(estilo_num)
+        if hasattr(estilo, 'gerar_atributos'):
+            # Para estilos que aceitam distribuicao e valores
+            try:
+                return estilo.gerar_atributos(distribuicao=distribuicao, valores=valores)
+            except TypeError:
+                # Para estilos que só aceitam valores
+                return estilo.gerar_atributos(valores=valores)
+        raise ValueError("Estilo inválido ou não implementa gerar_atributos corretamente.")
