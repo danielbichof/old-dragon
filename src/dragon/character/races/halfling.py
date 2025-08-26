@@ -2,7 +2,22 @@ from typing import List, Dict
 from .base import Race, Size
 
 class Halfling(Race):
-    """Halflings são astutos e ágeis."""
+    """Halflings são pequenos, sorridentes e surpreendentemente corajosos.
+
+    Atributos: +2 Destreza, +1 Carisma.
+    Tamanho: Pequeno. Deslocamento: 6m. Idiomas: Comum e Halfling.
+    Características Especiais: Sorte dos Halflings, Agilidade Halfling, Destemor.
+    """
+
+    def __init__(self):
+        self.darkvision = 0
+        self.alignment = "Neutro"
+        self.height_cm = 100
+        self.traits = [
+            "Sorte dos Halflings (rerrolar 1)",
+            "Agilidade Halfling (mover através de espaços maiores)",
+            "Destemor (vantagem contra medo)",
+        ]
 
     @property
     def name(self) -> str:
@@ -22,8 +37,11 @@ class Halfling(Race):
 
     @property
     def special_features(self) -> List[str]:
-        return ["Sorte Halfling"]
+        return ["Sorte dos Halflings", "Agilidade Halfling", "Destemor"]
 
     @property
     def description(self) -> str:
-        return "Astutos e ágeis, halflings valorizam a comunidade e o conforto, mas também são surpreendentemente corajosos."
+        return (
+            "Pequenos e discretos, halflings preferem conforto e paz, mas mostram "
+            "coragem notável quando confrontados com perigo."
+        )

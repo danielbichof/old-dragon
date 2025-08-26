@@ -52,23 +52,6 @@ class Atributos:
             "Carisma": self.carisma,
         }
 
-    def alterar_atributo(self, nome: str, delta: int):
-        """Altera um atributo pelo nome adicionando delta (pode ser negativo).
-
-        Ignora nomes inválidos silenciosamente.
-        """
-        mapping = {
-            "Força": "forca",
-            "Destreza": "destreza",
-            "Constituição": "constituicao",
-            "Inteligência": "inteligencia",
-            "Sabedoria": "sabedoria",
-            "Carisma": "carisma",
-        }
-        attr = mapping.get(nome)
-        if attr and hasattr(self, attr):
-            setattr(self, attr, getattr(self, attr) + delta)
-
     def __str__(self) -> str:
         """Representação em string dos atributos"""
         return f"""

@@ -91,11 +91,7 @@ def gerar():
     else:
         raca = r_escolha()
 
-    # Aplicar bônus raciais
-    for nome, bonus in raca.ability_bonuses.items():
-        atributos.alterar_atributo(nome, bonus) if hasattr(
-            atributos, "alterar_atributo"
-        ) else None
+    # (Bônus raciais não aplicados diretamente aos valores de atributos nesta versão.)
 
     # Escolha da classe
     classes_base = [
