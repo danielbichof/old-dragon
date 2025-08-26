@@ -1,8 +1,11 @@
 import pytest
-from dragon.character.classes import (
-    Fighter, Barbarian, Wizard, Scholar,
-    CombatStyle, ArcaneSchool, LiveDice
-)
+from dragon.character.classes.figher import Fighter
+from dragon.character.classes.barbarian import Barbarian
+from dragon.character.classes.wizard import Wizard
+from dragon.character.classes.scholar import Scholar
+from dragon.character.data.combat_style import CombatStyle
+from dragon.character.data.arcade_school import ArcaneSchool
+from dragon.character.data.live_dice import LiveDice
 
 def test_fighter_creation():
     style = CombatStyle(

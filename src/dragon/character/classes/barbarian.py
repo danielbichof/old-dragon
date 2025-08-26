@@ -1,7 +1,5 @@
-from dataclasses import dataclass
-from enum import Enum, auto
-from typing import Dict, List, Optional
-from IClasses import * 
+from typing import List
+from .IClasses import ICharacterClass
 from dragon.character.data.live_dice import LiveDice
 
 class Barbarian(ICharacterClass):

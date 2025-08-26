@@ -1,5 +1,9 @@
 import pytest
-from dragon.character.races import Human, Elf, Dwarf, Halfling, Size
+from dragon.character.races.base import Size
+from dragon.character.races.human import Human
+from dragon.character.races.elf import Elf
+from dragon.character.races.dwarf import Dwarf
+from dragon.character.races.halfling import Halfling
 
 
 def test_human_creation():

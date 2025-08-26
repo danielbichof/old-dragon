@@ -10,15 +10,17 @@ class Human(Race):
     """
 
     def __init__(self, bonus_choices: List[str]):
+        # Validação dos dois atributos distintos
         if len(bonus_choices) != 2 or len(set(bonus_choices)) != 2:
             raise ValueError("Humanos devem escolher dois atributos diferentes para +1")
-    self._bonus_choices = bonus_choices
-    # Metadados
-    self.darkvision = 0
-    self.alignment = "Qualquer"
-    self.height_cm = 170
-    self.traits = ["Versatilidade Humana"]
-    self.languages_extra = 1  # outro idioma à escolha
+
+        self._bonus_choices = bonus_choices
+        # Metadados
+        self.darkvision = 0
+        self.alignment = "Qualquer"
+        self.height_cm = 170
+        self.traits = ["Versatilidade Humana"]
+        self.languages_extra = 1  # outro idioma à escolha
 
     @property
     def name(self) -> str:

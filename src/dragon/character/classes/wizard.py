@@ -1,6 +1,5 @@
-from dataclasses import dataclass
 from typing import List
-from IClasses import * 
+from .IClasses import ICharacterClass
 from dragon.character.data.live_dice import LiveDice
 from dragon.character.data.arcade_school import ArcaneSchool
 

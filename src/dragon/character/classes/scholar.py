@@ -1,6 +1,5 @@
-
 from typing import List
-from IClasses import ICharacterClass
+from .IClasses import ICharacterClass
 from dragon.character.data.live_dice import LiveDice
 
 
