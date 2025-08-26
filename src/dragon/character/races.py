@@ -3,14 +3,18 @@ from dataclasses import dataclass
 from typing import List, Dict, Optional
 from enum import Enum, auto
 
+
 class Size(Enum):
     """Enumeração para tamanhos de personagem"""
+
     SMALL = auto()
     MEDIUM = auto()
     LARGE = auto()
 
+
 class Race(ABC):
     """Classe base para raças"""
+
     @property
     @abstractmethod
     def name(self) -> str:
@@ -50,6 +54,7 @@ class Race(ABC):
 
 class Human(Race):
     """Humanos são adaptáveis, ambiciosos e perseverantes."""
+
     def __init__(self, bonus_choices: List[str]):
         """
         Args:
@@ -86,6 +91,7 @@ class Human(Race):
 
 class Elf(Race):
     """Elfos são altivos e longevos, com afinidade natural para magia."""
+
     @property
     def name(self) -> str:
         return "Elfo"
@@ -100,10 +106,7 @@ class Elf(Race):
 
     @property
     def ability_bonuses(self) -> Dict[str, int]:
-        return {
-            "Destreza": 2,
-            "Inteligência": 1
-        }
+        return {"Destreza": 2, "Inteligência": 1}
 
     @property
     def special_features(self) -> List[str]:
@@ -116,6 +119,7 @@ class Elf(Race):
 
 class Dwarf(Race):
     """Anões são resilientes e disciplinados."""
+
     @property
     def name(self) -> str:
         return "Anão"
@@ -130,10 +134,7 @@ class Dwarf(Race):
 
     @property
     def ability_bonuses(self) -> Dict[str, int]:
-        return {
-            "Constituição": 2,
-            "Sabedoria": 1
-        }
+        return {"Constituição": 2, "Sabedoria": 1}
 
     @property
     def special_features(self) -> List[str]:
@@ -146,6 +147,7 @@ class Dwarf(Race):
 
 class Halfling(Race):
     """Halflings são astutos e ágeis."""
+
     @property
     def name(self) -> str:
         return "Halfling"
@@ -160,10 +162,7 @@ class Halfling(Race):
 
     @property
     def ability_bonuses(self) -> Dict[str, int]:
-        return {
-            "Destreza": 2,
-            "Carisma": 1
-        }
+        return {"Destreza": 2, "Carisma": 1}
 
     @property
     def special_features(self) -> List[str]:

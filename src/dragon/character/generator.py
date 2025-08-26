@@ -8,7 +8,6 @@ from dragon.core.style.heroic import EstiloHeroico
 from dragon.core.attributes import Atributos
 
 
-
 from InquirerPy import inquirer
 
 
@@ -26,16 +25,22 @@ class GeradorPersonagem:
         """Retorna o estilo de rolagem pelo número."""
         return self.estilos[numero]
 
-    def gerar_personagem(self, estilo_num: int, distribuicao: list = None, valores: list = None) -> Atributos:
+    def gerar_personagem(
+        self, estilo_num: int, distribuicao: list = None, valores: list = None
+    ) -> Atributos:
         """
         Gera um personagem completo a partir do número do estilo e parâmetros opcionais.
         """
         estilo = self.get_estilo(estilo_num)
-        if hasattr(estilo, 'gerar_atributos'):
+        if hasattr(estilo, "gerar_atributos"):
             # Para estilos que aceitam distribuicao e valores
             try:
-                return estilo.gerar_atributos(distribuicao=distribuicao, valores=valores)
+                return estilo.gerar_atributos(
+                    distribuicao=distribuicao, valores=valores
+                )
             except TypeError:
                 # Para estilos que só aceitam valores
                 return estilo.gerar_atributos(valores=valores)
-        raise ValueError("Estilo inválido ou não implementa gerar_atributos corretamente.")
+        raise ValueError(
+            "Estilo inválido ou não implementa gerar_atributos corretamente."
+        )
