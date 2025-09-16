@@ -7,58 +7,46 @@
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Como rodar (Poetry)](#como-rodar-o-projeto-localmente-poetry)
 - [License](#license)
 
-## Como rodar o projeto localmente
+## Como rodar o projeto localmente (Poetry)
 
 ### Pré-requisitos
 
 - Python 3.8 ou superior
+- Poetry instalado
 
-### 1. Crie e ative um ambiente virtual (venv)
+### 1. Instale o Poetry (se ainda não tiver)
 
-```bash
-python3 -m venv .venv
-# Ative o venv:
-# No Linux/macOS (bash/zsh):
-source .venv/bin/activate
-# No fish shell:
-source .venv/bin/activate.fish
-# No Windows (cmd):
-.venv\Scripts\activate.bat
+```fish
+python3 -m pip install --user poetry
 ```
 
-### 2. Instale o Hatch
+### 2. Instale as dependências
 
-```bash
-pip install hatch
+```fish
+poetry install
 ```
 
-### 3. Instale as dependências do projeto
+### 3. Executar a CLI
 
-```bash
-hatch env create
+O entrypoint `dragon` está mapeado para `dragon.cli:app`. Para abrir o gerador interativo:
+
+```fish
+poetry run dragon gerar
 ```
 
-### 4. Rode o projeto
+### 4. Rodar os testes
 
-```bash
-hatch run dragon
+```fish
+poetry run pytest -q
 ```
 
-#### Testes e checagem de tipos
+### 5. Checagem de tipos (mypy)
 
-- Para rodar os testes:
-
-```bash
-hatch run test
-```
-
-- Para checar tipos (mypy):
-
-```bash
-hatch run types:check
+```fish
+poetry run mypy
 ```
 
 ## License
