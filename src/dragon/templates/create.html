@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Criar Personagem • OLD Dragon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-slate-900 text-slate-100">
+    <main class="max-w-3xl mx-auto p-6">
+      <h1 class="text-3xl font-bold mb-6 text-teal-300">Criar Personagem</h1>
+
+      {% if erro %}
+      <div class="mb-4 p-3 rounded bg-red-900/50 border border-red-600">{{ erro }}</div>
+      {% endif %}
+
+      {% if not step and not resultado %}
+      <!-- Passo 1: escolher estilo -->
+      <form method="post" class="space-y-4">
+        <input type="hidden" name="step" value="1" />
+        <label class="block">
+          <span class="block mb-1">Estilo de rolagem</span>
+          <select name="estilo" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+            {% for num, nome in estilos.items() %}
+            <option value="{{ num }}">{{ num }}. {{ nome }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <button class="px-4 py-2 bg-teal-500 text-slate-900 font-semibold rounded">Gerar valores</button>
+      </form>
+
+      {% elif step == 2 %}
+      <!-- Passo 2: distribuir valores (para Aventureiro/Heroico), escolher raça e classe -->
+      <form method="post" class="space-y-6">
+        <input type="hidden" name="step" value="2" />
+        <input type="hidden" name="estilo" value="{{ estilo_num }}" />
+        {% if valores %}
+        {% for v in valores %}
+        <input type="hidden" name="valores[]" value="{{ v }}" />
+        {% endfor %}
+        {% endif %}
+
+        <section class="space-y-2">
+          <h2 class="text-xl font-semibold">Atributos</h2>
+          {% if estilo_num in [2,3] %}
+          <p class="text-sm text-slate-400">Valores rolados: {{ valores }}</p>
+          <div class="grid grid-cols-2 gap-3">
+            <label>Força
+              <select name="forca" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+              </select>
+            </label>
+            <label>Destreza
+              <select name="destreza" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+              </select>
+            </label>
+            <label>Constituição
+              <select name="constituicao" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+              </select>
+            </label>
+            <label>Inteligência
+              <select name="inteligencia" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+              </select>
+            </label>
+            <label>Sabedoria
+              <select name="sabedoria" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+              </select>
+            </label>
+            <label>Carisma
+              <select name="carisma" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+              </select>
+            </label>
+          </div>
+          {% else %}
+          <p class="text-sm text-slate-400">Estilo Clássico: os valores são aplicados na ordem gerada.</p>
+          {% endif %}
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-xl font-semibold">Raça</h2>
+          <select name="raca" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+            {% for key, nome in racas %}
+            <option value="{{ key }}">{{ nome }}</option>
+            {% endfor %}
+          </select>
+          <!-- Bônus humano -->
+          <div id="human-bonus" class="hidden space-y-2">
+            <p class="text-sm text-slate-400">Escolha dois atributos diferentes para +1:</p>
+            <div class="grid grid-cols-2 gap-3">
+              <select name="bonus1" class="bg-slate-800 border border-slate-700 rounded p-2">
+                <option>Força</option><option>Destreza</option><option>Constituição</option>
+                <option>Inteligência</option><option>Sabedoria</option><option>Carisma</option>
+              </select>
+              <select name="bonus2" class="bg-slate-800 border border-slate-700 rounded p-2">
+                <option>Força</option><option>Destreza</option><option>Constituição</option>
+                <option>Inteligência</option><option>Sabedoria</option><option>Carisma</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-2">
+          <h2 class="text-xl font-semibold">Classe</h2>
+          <select name="classe" id="classe" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+            {% for key, nome in classes %}
+            <option value="{{ key }}">{{ nome }}</option>
+            {% endfor %}
+          </select>
+
+          <!-- Fighter: estilo de combate -->
+          <div id="fighter-extra" class="hidden">
+            <label class="block mt-2">Estilo de Combate
+              <select name="fighter_style" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+                {% for c in fighter_estilos %}
+                <option value="{{ c.name }}">{{ c.name }} — {{ c.description }}</option>
+                {% endfor %}
+              </select>
+            </label>
+          </div>
+
+          <!-- Wizard: escola arcana -->
+          <div id="wizard-extra" class="hidden">
+            <label class="block mt-2">Escola Arcana
+              <select name="wizard_school" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+                {% for e in wizard_escolas %}
+                <option value="{{ e.name }}">{{ e.name }} — {{ e.description }}</option>
+                {% endfor %}
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <button class="px-4 py-2 bg-teal-500 text-slate-900 font-semibold rounded">Gerar Personagem</button>
+      </form>
+
+      <script>
+        const racaSelect = document.querySelector('select[name="raca"]').addEventListener('change', (e) => {
+          document.getElementById('human-bonus').classList.toggle('hidden', e.target.value !== 'Human');
+        });
+        const classeSelect = document.getElementById('classe');
+        const fighterExtra = document.getElementById('fighter-extra');
+        const wizardExtra = document.getElementById('wizard-extra');
+        classeSelect.addEventListener('change', (e) => {
+          fighterExtra.classList.toggle('hidden', e.target.value !== 'Fighter');
+          wizardExtra.classList.toggle('hidden', e.target.value !== 'Wizard');
+        });
+      </script>
+
+      {% elif resultado %}
+      <!-- Resultado -->
+      <section class="space-y-4">
+        <h2 class="text-2xl font-bold text-teal-300">Personagem Gerado</h2>
+        <div class="grid grid-cols-2 gap-3">
+          {% for nome, valor in resultado.atributos.items() %}
+          <div class="bg-slate-800 border border-slate-700 rounded p-2 flex justify-between">
+            <span>{{ nome }}</span>
+            <span class="font-semibold">{{ valor }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="bg-slate-800 border border-slate-700 rounded p-3">
+          <p><strong>Raça:</strong> {{ resultado.raca }} — Bônus: {{ resultado.raca_bonus }}</p>
+          <p><strong>Classe:</strong> {{ resultado.classe }} — PV dado: d{{ resultado.hit_die }}</p>
+          <p><strong>Perícias:</strong> {{ resultado.skills | join(', ') }}</p>
+          <p><strong>Características:</strong></p>
+          <ul class="list-disc ml-6">
+            {% for feat in resultado.features %}
+            <li>{{ feat }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div class="grid grid-cols-4 gap-3">
+          <div class="bg-slate-800 border border-slate-700 rounded p-2"><strong>Soma</strong><div>{{ resultado.soma }}</div></div>
+          <div class="bg-slate-800 border border-slate-700 rounded p-2"><strong>Maior</strong><div>{{ resultado.maior }}</div></div>
+          <div class="bg-slate-800 border border-slate-700 rounded p-2"><strong>Menor</strong><div>{{ resultado.menor }}</div></div>
+          <div class="bg-slate-800 border border-slate-700 rounded p-2"><strong>Média</strong><div>{{ resultado.media }}</div></div>
+        </div>
+        <a href="/criar" class="inline-block mt-2 text-teal-300 hover:underline">Criar outro personagem</a>
+      </section>
+      {% endif %}
+    </main>
+  </body>
+</html>
