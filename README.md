@@ -15,36 +15,25 @@
 ### Pré-requisitos
 
 - Python 3.8 ou superior
+- Poetry 1.2+ ([instalação do Poetry](https://python-poetry.org/docs/#installation))
 
-### 1. Crie e ative um ambiente virtual (venv)
+### 1. Clone o repositório e navegue até a pasta
 
 ```bash
-python3 -m venv .venv
-# Ative o venv:
-# No Linux/macOS (bash/zsh):
-source .venv/bin/activate
-# No fish shell:
-source .venv/bin/activate.fish
-# No Windows (cmd):
-.venv\Scripts\activate.bat
+git clone <repository-url>
+cd old-dragon
 ```
 
-### 2. Instale o Hatch
+### 2. Instale as dependências do projeto
 
 ```bash
-pip install hatch
+poetry install
 ```
 
-### 3. Instale as dependências do projeto
+### 3. Rode o projeto
 
 ```bash
-hatch env create
-```
-
-### 4. Rode o projeto
-
-```bash
-hatch run dragon
+poetry run dragon
 ```
 
 #### Testes e checagem de tipos
@@ -52,13 +41,13 @@ hatch run dragon
 - Para rodar os testes:
 
 ```bash
-hatch run test
+poetry run pytest
 ```
 
 - Para checar tipos (mypy):
 
 ```bash
-hatch run types:check
+poetry run mypy src/dragon tests
 ```
 
 ## License
