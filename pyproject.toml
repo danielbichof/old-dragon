@@ -1,16 +1,12 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
+[tool.poetry]
 name = "dragon"
-dynamic = ["version"]
-description = ''
-readme = "README.md"
-requires-python = ">=3.8"
+version = "0.1.0"
+description = ""
+authors = ["U.N. Owen <void@some.where>"]
 license = "MIT"
+readme = "README.md"
 keywords = []
-authors = [{ name = "U.N. Owen", email = "void@some.where" }]
+packages = [{ include = "dragon", from = "src" }]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python",
@@ -22,18 +18,22 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = ['typer', 'InquirerPy']
 
-[project.scripts]
+[tool.poetry.dependencies]
+python = ">=3.8"
+typer = "*"
+InquirerPy = "*"
+
+[tool.poetry.scripts]
 dragon = "dragon.cli:app"
 
-[tool.hatch.version]
-path = "src/dragon/__about__.py"
+[tool.poetry.dev-dependencies]
+mypy = ">=1.0.0"
+pytest = "*"
 
-[tool.hatch.envs.types]
-extra-dependencies = ["mypy>=1.0.0"]
-[tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/dragon tests}"
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.coverage.run]
 source_pkgs = ["dragon", "tests"]
