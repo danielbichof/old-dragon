@@ -7,8 +7,15 @@
 
 ## Table of Contents
 
+- [Como rodar o projeto localmente](#como-rodar-o-projeto-localmente)
 - [Installation](#installation)
 - [License](#license)
+
+## Installation
+
+```console
+pip install dragon
+```
 
 ## Como rodar o projeto localmente
 
