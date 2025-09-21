@@ -23,9 +23,11 @@ classifiers = [
 python = ">=3.8"
 typer = "*"
 InquirerPy = "*"
+flask = "*"
 
 [tool.poetry.scripts]
 dragon = "dragon.cli:app"
+dragon-web = "dragon.web:run"
 
 [tool.poetry.dev-dependencies]
 mypy = ">=1.0.0"
