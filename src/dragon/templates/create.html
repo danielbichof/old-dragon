@@ -44,34 +44,34 @@
           <h2 class="text-xl font-semibold">Atributos</h2>
           {% if estilo_num in [2,3] %}
           <p class="text-sm text-slate-400">Valores rolados: {{ valores }}</p>
-          <div class="grid grid-cols-2 gap-3">
+          <div id="attribute-selectors" class="grid grid-cols-2 gap-3">
             <label>Força
-              <select name="forca" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+              <select name="forca" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
                 {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Destreza
-              <select name="destreza" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+              <select name="destreza" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
                 {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Constituição
-              <select name="constituicao" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+              <select name="constituicao" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
                 {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Inteligência
-              <select name="inteligencia" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+              <select name="inteligencia" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
                 {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Sabedoria
-              <select name="sabedoria" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+              <select name="sabedoria" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
                 {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Carisma
-              <select name="carisma" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
+              <select name="carisma" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
                 {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
               </select>
             </label>
@@ -135,20 +135,54 @@
           </div>
         </section>
 
-        <button class="px-4 py-2 bg-teal-500 text-slate-900 font-semibold rounded">Gerar Personagem</button>
+        <button id="submit-btn" class="px-4 py-2 bg-teal-500 text-slate-900 font-semibold rounded">Gerar Personagem</button>
       </form>
 
       <script>
-        const racaSelect = document.querySelector('select[name="raca"]').addEventListener('change', (e) => {
-          document.getElementById('human-bonus').classList.toggle('hidden', e.target.value !== 'Human');
+        document.addEventListener('DOMContentLoaded', () => {
+          const attributeSelectors = document.querySelectorAll('.attribute-select');
+          const submitBtn = document.getElementById('submit-btn');
+
+          function updateSelectors() {
+            const selectedValues = new Set();
+            attributeSelectors.forEach(s => selectedValues.add(s.value));
+
+            attributeSelectors.forEach(currentSelect => {
+              const currentValue = currentSelect.value;
+              Array.from(currentSelect.options).forEach(option => {
+                if (option.value !== currentValue && selectedValues.has(option.value)) {
+                  option.disabled = true;
+                } else {
+                  option.disabled = false;
+                }
+              });
+            });
+          }
+
+          attributeSelectors.forEach(select => {
+            select.addEventListener('change', updateSelectors);
+          });
+
+          // Initial setup
+          updateSelectors();
         });
+
+        const racaSelect = document.querySelector('select[name="raca"]');
+        if (racaSelect) {
+          racaSelect.addEventListener('change', (e) => {
+            document.getElementById('human-bonus').classList.toggle('hidden', e.target.value !== 'Human');
+          });
+        }
+
         const classeSelect = document.getElementById('classe');
-        const fighterExtra = document.getElementById('fighter-extra');
-        const wizardExtra = document.getElementById('wizard-extra');
-        classeSelect.addEventListener('change', (e) => {
-          fighterExtra.classList.toggle('hidden', e.target.value !== 'Fighter');
-          wizardExtra.classList.toggle('hidden', e.target.value !== 'Wizard');
-        });
+        if (classeSelect) {
+          const fighterExtra = document.getElementById('fighter-extra');
+          const wizardExtra = document.getElementById('wizard-extra');
+          classeSelect.addEventListener('change', (e) => {
+            fighterExtra.classList.toggle('hidden', e.target.value !== 'Fighter');
+            wizardExtra.classList.toggle('hidden', e.target.value !== 'Wizard');
+          });
+        }
       </script>
 
       {% elif resultado %}
