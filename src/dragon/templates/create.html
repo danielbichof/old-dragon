@@ -34,11 +34,13 @@
       <form method="post" class="space-y-6">
         <input type="hidden" name="step" value="2" />
         <input type="hidden" name="estilo" value="{{ estilo_num }}" />
-        {% if valores %}
+  {% if valores %}
         {% for v in valores %}
         <input type="hidden" name="valores[]" value="{{ v }}" />
         {% endfor %}
         {% endif %}
+  <!-- Indica ao backend que os selects usam índice do array 'valores' -->
+  <input type="hidden" name="use_indices" value="1" />
 
         <section class="space-y-2">
           <h2 class="text-xl font-semibold">Atributos</h2>
@@ -46,34 +48,58 @@
           <p class="text-sm text-slate-400">Valores rolados: {{ valores }}</p>
           <div class="grid grid-cols-2 gap-3">
             <label>Força
-              <select name="forca" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
-              </select>
+              <div class="flex gap-2 items-center">
+                <select id="attr-forca" name="forca" class="attr-select w-full bg-slate-800 border border-slate-700 rounded p-2" data-attr="forca">
+                  <option value="" selected>Selecione…</option>
+                  {% for v in valores %}<option value="{{ loop.index0 }}" data-idx="{{ loop.index0 }}">{{ v }}</option>{% endfor %}
+                </select>
+                <button type="button" class="clear-attr text-xs px-2 py-1 border border-slate-600 rounded hover:bg-slate-700" data-target="forca">Limpar</button>
+              </div>
             </label>
             <label>Destreza
-              <select name="destreza" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
-              </select>
+              <div class="flex gap-2 items-center">
+                <select id="attr-destreza" name="destreza" class="attr-select w-full bg-slate-800 border border-slate-700 rounded p-2" data-attr="destreza">
+                  <option value="" selected>Selecione…</option>
+                  {% for v in valores %}<option value="{{ loop.index0 }}" data-idx="{{ loop.index0 }}">{{ v }}</option>{% endfor %}
+                </select>
+                <button type="button" class="clear-attr text-xs px-2 py-1 border border-slate-600 rounded hover:bg-slate-700" data-target="destreza">Limpar</button>
+              </div>
             </label>
             <label>Constituição
-              <select name="constituicao" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
-              </select>
+              <div class="flex gap-2 items-center">
+                <select id="attr-constituicao" name="constituicao" class="attr-select w-full bg-slate-800 border border-slate-700 rounded p-2" data-attr="constituicao">
+                  <option value="" selected>Selecione…</option>
+                  {% for v in valores %}<option value="{{ loop.index0 }}" data-idx="{{ loop.index0 }}">{{ v }}</option>{% endfor %}
+                </select>
+                <button type="button" class="clear-attr text-xs px-2 py-1 border border-slate-600 rounded hover:bg-slate-700" data-target="constituicao">Limpar</button>
+              </div>
             </label>
             <label>Inteligência
-              <select name="inteligencia" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
-              </select>
+              <div class="flex gap-2 items-center">
+                <select id="attr-inteligencia" name="inteligencia" class="attr-select w-full bg-slate-800 border border-slate-700 rounded p-2" data-attr="inteligencia">
+                  <option value="" selected>Selecione…</option>
+                  {% for v in valores %}<option value="{{ loop.index0 }}" data-idx="{{ loop.index0 }}">{{ v }}</option>{% endfor %}
+                </select>
+                <button type="button" class="clear-attr text-xs px-2 py-1 border border-slate-600 rounded hover:bg-slate-700" data-target="inteligencia">Limpar</button>
+              </div>
             </label>
             <label>Sabedoria
-              <select name="sabedoria" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
-              </select>
+              <div class="flex gap-2 items-center">
+                <select id="attr-sabedoria" name="sabedoria" class="attr-select w-full bg-slate-800 border border-slate-700 rounded p-2" data-attr="sabedoria">
+                  <option value="" selected>Selecione…</option>
+                  {% for v in valores %}<option value="{{ loop.index0 }}" data-idx="{{ loop.index0 }}">{{ v }}</option>{% endfor %}
+                </select>
+                <button type="button" class="clear-attr text-xs px-2 py-1 border border-slate-600 rounded hover:bg-slate-700" data-target="sabedoria">Limpar</button>
+              </div>
             </label>
             <label>Carisma
-              <select name="carisma" class="w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
-              </select>
+              <div class="flex gap-2 items-center">
+                <select id="attr-carisma" name="carisma" class="attr-select w-full bg-slate-800 border border-slate-700 rounded p-2" data-attr="carisma">
+                  <option value="" selected>Selecione…</option>
+                  {% for v in valores %}<option value="{{ loop.index0 }}" data-idx="{{ loop.index0 }}">{{ v }}</option>{% endfor %}
+                </select>
+                <button type="button" class="clear-attr text-xs px-2 py-1 border border-slate-600 rounded hover:bg-slate-700" data-target="carisma">Limpar</button>
+              </div>
             </label>
           </div>
           {% else %}
@@ -92,11 +118,13 @@
           <div id="human-bonus" class="hidden space-y-2">
             <p class="text-sm text-slate-400">Escolha dois atributos diferentes para +1:</p>
             <div class="grid grid-cols-2 gap-3">
-              <select name="bonus1" class="bg-slate-800 border border-slate-700 rounded p-2">
+              <select name="bonus1" id="bonus1" class="human-bonus bg-slate-800 border border-slate-700 rounded p-2">
+                <option value="" selected>Selecione…</option>
                 <option>Força</option><option>Destreza</option><option>Constituição</option>
                 <option>Inteligência</option><option>Sabedoria</option><option>Carisma</option>
               </select>
-              <select name="bonus2" class="bg-slate-800 border border-slate-700 rounded p-2">
+              <select name="bonus2" id="bonus2" class="human-bonus bg-slate-800 border border-slate-700 rounded p-2">
+                <option value="" selected>Selecione…</option>
                 <option>Força</option><option>Destreza</option><option>Constituição</option>
                 <option>Inteligência</option><option>Sabedoria</option><option>Carisma</option>
               </select>
@@ -135,11 +163,15 @@
           </div>
         </section>
 
-        <button class="px-4 py-2 bg-teal-500 text-slate-900 font-semibold rounded">Gerar Personagem</button>
+        <div class="flex gap-3">
+          <button class="px-4 py-2 bg-teal-500 text-slate-900 font-semibold rounded">Gerar Personagem</button>
+          <a href="/criar" class="px-4 py-2 bg-slate-700 text-slate-100 font-semibold rounded">Reiniciar</a>
+        </div>
       </form>
 
       <script>
-        const racaSelect = document.querySelector('select[name="raca"]').addEventListener('change', (e) => {
+        const racaSelectEl = document.querySelector('select[name="raca" ]');
+        racaSelectEl.addEventListener('change', (e) => {
           document.getElementById('human-bonus').classList.toggle('hidden', e.target.value !== 'Human');
         });
         const classeSelect = document.getElementById('classe');
@@ -149,6 +181,65 @@
           fighterExtra.classList.toggle('hidden', e.target.value !== 'Fighter');
           wizardExtra.classList.toggle('hidden', e.target.value !== 'Wizard');
         });
+
+        // Bloqueio sequencial: cada valor só pode ser usado uma vez
+        (function() {
+          const selects = Array.from(document.querySelectorAll('select.attr-select'));
+          const clearButtons = Array.from(document.querySelectorAll('.clear-attr'));
+          const humanBonusSelects = Array.from(document.querySelectorAll('select.human-bonus'));
+          const updateDisables = () => {
+            const chosen = new Set(
+              selects
+                .map(s => s.value)
+                .filter(v => v !== '' && v != null)
+            );
+            selects.forEach(sel => {
+              Array.from(sel.options).forEach(opt => {
+                const idx = opt.value;
+                // Habilita tudo e depois desabilita escolhidos em outros selects
+                opt.disabled = false;
+                if (idx !== '' && chosen.has(idx) && sel.value !== idx) {
+                  opt.disabled = true;
+                }
+              });
+            });
+            // Atualiza estado dos botões Limpar
+            clearButtons.forEach(btn => {
+              const target = btn.dataset.target;
+              const sel = document.querySelector(`select.attr-select[data-attr="${target}"]`);
+              if (sel) btn.disabled = sel.value === '';
+            });
+
+            // Seção de Humanos: impedir escolhas iguais
+            if (humanBonusSelects.length === 2) {
+              const [b1, b2] = humanBonusSelects;
+              const v1 = b1.value;
+              const v2 = b2.value;
+              Array.from(b1.options).forEach(o => { o.disabled = false; });
+              Array.from(b2.options).forEach(o => { o.disabled = false; });
+              if (v2 !== '') {
+                Array.from(b1.options).forEach(o => { if (o.value !== '' && o.value === v2) o.disabled = true; });
+              }
+              if (v1 !== '') {
+                Array.from(b2.options).forEach(o => { if (o.value !== '' && o.value === v1) o.disabled = true; });
+              }
+            }
+          };
+          selects.forEach(sel => sel.addEventListener('change', updateDisables));
+          clearButtons.forEach(btn => btn.addEventListener('click', () => {
+            const target = btn.dataset.target;
+            const sel = document.querySelector(`select.attr-select[data-attr="${target}"]`);
+            if (sel) {
+              sel.value = '';
+              sel.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          }));
+          humanBonusSelects.forEach(sel => sel.addEventListener('change', updateDisables));
+          // Inicializa estado ao carregar
+          // Exibir seção de humano se já estiver selecionado (ex.: pós-erro)
+          document.getElementById('human-bonus').classList.toggle('hidden', racaSelectEl.value !== 'Human');
+          updateDisables();
+        })();
       </script>
 
       {% elif resultado %}
