@@ -47,32 +47,32 @@
           <div id="attribute-selectors" class="grid grid-cols-2 gap-3">
             <label>Força
               <select name="forca" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+                {% for v in valores %}<option value="{{ v }}" {% if loop.index0 == 0 %}selected{% endif %}>{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Destreza
               <select name="destreza" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+                {% for v in valores %}<option value="{{ v }}" {% if loop.index0 == 1 %}selected{% endif %}>{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Constituição
               <select name="constituicao" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+                {% for v in valores %}<option value="{{ v }}" {% if loop.index0 == 2 %}selected{% endif %}>{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Inteligência
               <select name="inteligencia" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+                {% for v in valores %}<option value="{{ v }}" {% if loop.index0 == 3 %}selected{% endif %}>{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Sabedoria
               <select name="sabedoria" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+                {% for v in valores %}<option value="{{ v }}" {% if loop.index0 == 4 %}selected{% endif %}>{{ v }}</option>{% endfor %}
               </select>
             </label>
             <label>Carisma
               <select name="carisma" class="attribute-select w-full bg-slate-800 border border-slate-700 rounded p-2">
-                {% for v in valores %}<option value="{{ v }}">{{ v }}</option>{% endfor %}
+                {% for v in valores %}<option value="{{ v }}" {% if loop.index0 == 5 %}selected{% endif %}>{{ v }}</option>{% endfor %}
               </select>
             </label>
           </div>
