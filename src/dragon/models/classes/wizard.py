@@ -1,7 +1,8 @@
 from typing import List
 from .IClasses import ICharacterClass
-from dragon.character.data.live_dice import LiveDice
-from dragon.character.data.arcade_school import ArcaneSchool
+from dragon.models.data.live_dice import LiveDice
+from dragon.models.data.arcade_school import ArcaneSchool
+
 
 class Wizard(ICharacterClass):
     """Mago é um mestre da magia arcana."""

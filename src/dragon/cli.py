@@ -1,16 +1,16 @@
 import typer
 from InquirerPy import inquirer
-from dragon.character.generator import GeradorPersonagem
-from dragon.character.races.human import Human
-from dragon.character.races.elf import Elf
-from dragon.character.races.dwarf import Dwarf
-from dragon.character.races.halfling import Halfling
-from dragon.character.classes.figher import Fighter
-from dragon.character.classes.barbarian import Barbarian
-from dragon.character.classes.wizard import Wizard
-from dragon.character.classes.scholar import Scholar
-from dragon.character.data.combat_style import CombatStyle
-from dragon.character.data.arcade_school import ArcaneSchool
+from dragon.models.generator import GeradorPersonagem
+from dragon.models.races.human import Human
+from dragon.models.races.elf import Elf
+from dragon.models.races.dwarf import Dwarf
+from dragon.models.races.halfling import Halfling
+from dragon.models.classes.figher import Fighter
+from dragon.models.classes.barbarian import Barbarian
+from dragon.models.classes.wizard import Wizard
+from dragon.models.classes.scholar import Scholar
+from dragon.models.data.combat_style import CombatStyle
+from dragon.models.data.arcade_school import ArcaneSchool
 
 app = typer.Typer()
 

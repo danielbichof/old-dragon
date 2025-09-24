@@ -1,7 +1,6 @@
-from dragon.core.style.IStyle import EstiloRolagem
-from dragon.core.attributes import Atributos
-from dragon.core.dice import Dado
-
+from .IStyle import EstiloRolagem
+from ..attributes import Atributos
+from ..dice import Dado
 
 
 class EstiloHeroico(EstiloRolagem):
@@ -11,7 +10,9 @@ class EstiloHeroico(EstiloRolagem):
         """Gera os 6 valores de atributos para o estilo heroico."""
         return [Dado.rolar_4d6_eliminar_menor() for _ in range(6)]
 
-    def gerar_atributos(self, distribuicao: list = None, valores: list = None) -> Atributos:
+    def gerar_atributos(
+        self, distribuicao: list = None, valores: list = None
+    ) -> Atributos:
         """
         Gera atributos no estilo heroico.
         Se distribuicao for fornecida, usa a ordem dos valores nela;
