@@ -1,11 +1,12 @@
 # Interfaces
-from dragon.core.style.IStyle import EstiloRolagem
+from .style.IStyle import EstiloRolagem
 from .races import Human, Elf, Dwarf, Halfling  # noqa: F401
+
 # ---
-from dragon.core.style.adventory import EstiloAventureiro
-from dragon.core.style.classic import EstiloClassico
-from dragon.core.style.heroic import EstiloHeroico
-from dragon.core.attributes import Atributos
+from .style.adventory import EstiloAventureiro
+from .style.classic import EstiloClassico
+from .style.heroic import EstiloHeroico
+from .attributes import Atributos
 
 
 from InquirerPy import inquirer

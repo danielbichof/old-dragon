@@ -1,7 +1,7 @@
 from typing import List
 from .IClasses import ICharacterClass
-from dragon.character.data.live_dice import LiveDice
-from dragon.character.data.combat_style import CombatStyle
+from dragon.models.data.live_dice import LiveDice
+from dragon.models.data.combat_style import CombatStyle
 
 
 class Fighter(ICharacterClass):

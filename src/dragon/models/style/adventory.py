@@ -1,7 +1,6 @@
-from dragon.core.style.IStyle import EstiloRolagem
-from dragon.core.attributes import Atributos
-from dragon.core.dice import Dado
-
+from .IStyle import EstiloRolagem
+from ..attributes import Atributos
+from ..dice import Dado
 
 
 class EstiloAventureiro(EstiloRolagem):
@@ -11,7 +10,9 @@ class EstiloAventureiro(EstiloRolagem):
         """Gera os 6 valores de atributos para o estilo aventureiro."""
         return [Dado.rolar_3d6() for _ in range(6)]
 
-    def gerar_atributos(self, distribuicao: list = None, valores: list = None) -> Atributos:
+    def gerar_atributos(
+        self, distribuicao: list = None, valores: list = None
+    ) -> Atributos:
         """
         Gera atributos no estilo aventureiro.
         Se distribuicao for fornecida, usa a ordem dos valores nela;

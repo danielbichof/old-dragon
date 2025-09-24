@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
-from dragon.character.data.live_dice import LiveDice
+from dragon.models.data.live_dice import LiveDice
+
 
 class ICharacterClass(ABC):
     """Classe base para classes de personagem"""
@@ -34,5 +35,3 @@ class ICharacterClass(ABC):
     def description(self) -> str:
         """Descrição da classe"""
         pass
-
-

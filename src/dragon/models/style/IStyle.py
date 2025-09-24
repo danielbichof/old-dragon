@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from dragon.core.attributes import Atributos
+from ..attributes import Atributos
 
 
 class EstiloRolagem(ABC):

@@ -1,7 +1,6 @@
-from dragon.core.style.IStyle import EstiloRolagem
-from dragon.core.attributes import Atributos
-from dragon.core.dice import Dado
-
+from .IStyle import EstiloRolagem
+from ..attributes import Atributos
+from ..dice import Dado
 
 
 class EstiloClassico(EstiloRolagem):
