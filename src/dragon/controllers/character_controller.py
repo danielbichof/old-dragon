@@ -189,6 +189,9 @@ def criar_personagem_submit():
         wizard_school_name=request.form.get("wizard_school"),
     )
 
+    # Salva o personagem em arquivo JSON
+    caminho_arquivo = service.salvar_personagem(personagem)
+
     return render_template(
         "create.html",
         estilos=estilos,
@@ -208,5 +211,6 @@ def criar_personagem_submit():
             "maior": personagem.maior,
             "menor": personagem.menor,
             "media": personagem.media,
+            "arquivo_salvo": caminho_arquivo,
         },
     )

@@ -246,6 +246,11 @@
       <!-- Resultado -->
       <section class="space-y-4">
         <h2 class="text-2xl font-bold text-teal-300">Personagem Gerado</h2>
+        {% if resultado.arquivo_salvo %}
+        <div class="mb-4 p-3 rounded bg-teal-900/50 border border-teal-600">
+          ✓ Personagem salvo com sucesso em: <code class="text-teal-300">{{ resultado.arquivo_salvo }}</code>
+        </div>
+        {% endif %}
         <div class="grid grid-cols-2 gap-3">
           {% for nome, valor in resultado.atributos.items() %}
           <div class="bg-slate-800 border border-slate-700 rounded p-2 flex justify-between">
