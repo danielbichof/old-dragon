@@ -1,4 +1,7 @@
 from typing import Dict, List, Optional, Tuple
+import json
+from datetime import datetime
+from pathlib import Path
 from dragon.models.generator import GeradorPersonagem
 from dragon.models.races.human import Human
 from dragon.models.races.elf import Elf
@@ -134,3 +137,33 @@ class CharacterService:
             skills=classe.skills,
             features=classe.features,
         )
+
+    def salvar_personagem(self, personagem: Personagem) -> str:
+        """
+        Salva o personagem em um arquivo JSON.
+        Retorna o caminho do arquivo criado.
+        """
+        # Cria o diretório se não existir
+        personagens_dir = Path("personagens")
+        personagens_dir.mkdir(exist_ok=True)
+
+        # Gera um nome de arquivo único com timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        nome_arquivo = f"personagem_{personagem.classe.lower()}_{timestamp}.json"
+        caminho_completo = personagens_dir / nome_arquivo
+
+        # Converte o personagem para dicionário e adiciona propriedades calculadas
+        dados_personagem = {
+            **personagem.__dict__,
+            "soma": personagem.soma,
+            "maior": personagem.maior,
+            "menor": personagem.menor,
+            "media": personagem.media,
+            "data_criacao": datetime.now().isoformat(),
+        }
+
+        # Salva em JSON com indentação para facilitar leitura
+        with open(caminho_completo, "w", encoding="utf-8") as f:
+            json.dump(dados_personagem, f, ensure_ascii=False, indent=2)
+
+        return str(caminho_completo)
